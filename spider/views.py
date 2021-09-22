@@ -55,6 +55,9 @@ def home(request):
     businesses = Business.objects.all()
     hoods = Neighbourhood.objects.all()
 
+    mp = Post.objects.last()
+    mb = Business.objects.last()
+
     pf = PostForm()
 
     if request.method == 'POST':
@@ -70,7 +73,7 @@ def home(request):
         else:
             pf = PostForm()
 
-    return render(request, 'home.html', {'pf': pf, 'posts': posts, 'businesses': businesses, 'hoods': hoods})
+    return render(request, 'home.html', {'pf': pf, 'mb': mb, 'mp': mp, 'posts': posts, 'businesses': businesses, 'hoods': hoods})
 
 @login_required('')
 def my_profile(request):
@@ -109,6 +112,19 @@ class UpdateBusiness(LoginRequiredMixin,UpdateView):
     form_class = BusinessForm
     template_name = 'update_business.html'
     context_object_name = 'business'
+
+@login_required
+def search_results(request):  
+
+    if 'search_business' in request.GET and request.GET["search_business"]:
+        search_term = request.GET.get("search_business")
+        searched_business = Business.search_by_name(search_term)
+        message = f"{search_term}"
+        title = search_term
+        return render(request, 'search.html',{"message": message, "businesses": searched_business, 'title': title})
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'search.html',{"message": message})
 
 def logout_view(request):
     logout(request)
