@@ -52,7 +52,8 @@ def home(request):
     user = request.user
 
     posts = Post.objects.all()
-    businesses = Business.objects.all()
+    businesses = Business.objects.filter(neighborhood=user.profile.neighborhood).all()
+    # businesses = Business.objects.all()
     hoods = Neighbourhood.objects.all()
 
     mp = Post.objects.last()

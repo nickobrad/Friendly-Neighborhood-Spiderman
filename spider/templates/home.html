@@ -279,7 +279,6 @@
       <div class="p-4 bg-light rounded" style="width: 100%;">
         <h4 class="font-italic">Businesses Near Me</h4>
         {% for business in businesses %}
-        {% if business.neighborhood == request.user.profile.neighborhood %}
         <div class="business d-flex" style="align-items: center;">
           <div class="blogo">
             {% if business.business_logo %}
@@ -299,11 +298,10 @@
             </p>
           </div>
         </div>
-        {% else %}
+        {% empty %}
         <p>
           There are no local registered businesses around here.
         </p>
-        {% endif %}
         {% endfor %}
       </div>
 
