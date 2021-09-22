@@ -105,7 +105,7 @@ class Business(models.Model):
     def save_business(self):
         self.save()
 
-    def delete_business(self):
+    def delete_business(self): 
         self.delete()
 
     @classmethod
@@ -116,4 +116,4 @@ class Business(models.Model):
     @classmethod
     def search_by_name(cls,search_term):
         business = cls.objects.filter(name__icontains = search_term)
-        return business
+        return business 
