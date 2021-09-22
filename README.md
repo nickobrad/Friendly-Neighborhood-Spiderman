@@ -40,7 +40,7 @@ To access this project on your local files, you can clone it using these steps
 
 ### Live Site
 
-View [live](https://insta-moringa.herokuapp.com/)
+View [live](https://hood-news-moringa.herokuapp.com/)
 
 ### Licence
 
