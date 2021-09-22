@@ -227,7 +227,8 @@
           Contact Info: {{ business.contact }}
         </p>
         <p>
-          <a class="btn btn-secondary" href="{% url 'updatebusiness' business.pk %}" role="button">Update Business &raquo;</a>
+          <a class="btn btn-secondary" href="{% url 'updatebusiness' business.pk %}" role="button">Update Business
+            &raquo;</a>
         </p>
       </div><!-- /.col-lg-4 -->
       {% endfor %}
@@ -277,7 +278,8 @@
           {% endif %}
         </p>
         <p>
-          <a type="button" href="{% url 'updateprofile' profile.pk %}" class="text-white font-weight-bold btn btn-secondary">
+          <a type="button" href="{% url 'updateprofile' profile.pk %}"
+            class="text-white font-weight-bold btn btn-secondary">
             Update Profile
           </a>
         </p>
@@ -285,10 +287,12 @@
       <div class="col-md-5">
         {% if profile.profile_photo %}
         <img src="{{ profile.profile_photo.url }}" alt=""
-          class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto p-3" style="width: 500px; height: 500px;">
+          class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto p-3"
+          style="width: 500px; height: 500px;">
         {% else %}
         <img src="/static/images/jeremy-perkins-UgNjyPkphtU-unsplash.jpg" alt=""
-          class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto p-3" style="width: 500px; height: 500px;">
+          class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto p-3"
+          style="width: 500px; height: 500px;">
         {% endif %}
       </div>
     </div>
@@ -312,61 +316,59 @@
         <h5 class="modal-title" id="businessModalLabel">Register your Business</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <div class="d-flex justify-content-center form_container">
-          <form class="d-flex flex-column" action="" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="mb-2">
-              <div class="fw-bold text-capitalize mb-2">
-                <label for="floatingInput">Business Name</label>
+      <form class="" action="" method="post" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="d-flex flex-column justify-content-center form_container">
+              {% csrf_token %}
+              <div class="mb-2">
+                <div class="fw-bold text-capitalize mb-2">
+                  <label for="floatingInput">Business Name</label>
+                </div>
+                <div>
+                  {{ bf.name }}
+                </div>
               </div>
-              <div>
-                {{ bf.name }}
+              <div class="mb-2">
+                <div class="fw-bold text-capitalize mb-2">
+                  <label for="floatingInput">Business Details</label>
+                </div>
+                <div>
+                  {{ bf.business_details }}
+                </div>
               </div>
-            </div>
-            <div class="mb-2">
-              <div class="fw-bold text-capitalize mb-2">
-                <label for="floatingInput">Business Details</label>
+              <div class="mb-2">
+                <div class="fw-bold text-capitalize mb-2">
+                  <label for="floatingInput">Business Logo</label>
+                </div>
+                <div>
+                  {{ bf.business_logo }}
+                </div>
               </div>
-              <div>
-                {{ bf.business_details }}
+              <div class="mb-2">
+                <div class="fw-bold text-capitalize mb-2">
+                  <label for="floatingInput">Email Contact</label>
+                </div>
+                <div>
+                  {{ bf.contact }}
+                </div>
               </div>
-            </div>
-            <div class="mb-2">
-              <div class="fw-bold text-capitalize mb-2">
-                <label for="floatingInput">Business Logo</label>
+              <div class="mb-2">
+                <div class="fw-bold text-capitalize mb-2">
+                  <label for="floatingInput">Location</label>
+                </div>
+                <div>
+                  {{ bf.neighborhood }}
+                </div>
               </div>
-              <div>
-                {{ bf.business_logo }}
-              </div>
-            </div>
-            <div class="mb-2">
-              <div class="fw-bold text-capitalize mb-2">
-                <label for="floatingInput">Email Contact</label>
-              </div>
-              <div>
-                {{ bf.contact }}
-              </div>
-            </div>
-            <div class="mb-2">
-              <div class="fw-bold text-capitalize mb-2">
-                <label for="floatingInput">Location</label>
-              </div>
-              <div>
-                {{ bf.neighborhood }}
-              </div>
-            </div>
-            <div class="d-flex justify-content-center mb-2">
-              <button class="btn btn-secondary my-2"> Register your business</button>
-            </div>
-            {{ form.errors }}
-          </form>
+              
+              {{ form.errors }}
+          </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
-      </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button class="btn btn-secondary my-2">Register your business</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
