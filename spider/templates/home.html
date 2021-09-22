@@ -161,19 +161,16 @@
         <a class="blog-header-logo text-dark" href="#">Spiderman</a>
       </div>
       <div class="col-4 d-flex justify-content-end align-items-center">
-        <a class="link-secondary" href="#" aria-label="Search">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
-            stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24">
-            <title>Search</title>
-            <circle cx="10.5" cy="10.5" r="7.5" />
-            <path d="M21 21l-5.2-5.2" />
-          </svg>
-        </a>
+        <form action="{% url 'search_business' %}" role = 'search' class="d-flex mx-auto">
+          {% csrf_token %}
+          <input class="form-control me-2" name = 'search_business' type="search" placeholder="Search" aria-label="Search">
+          <button class="btn " type="submit"><i class="fa fa-search" aria-hidden="false"></i></button>
+        </form>
         <a class="btn btn-sm btn-outline-secondary" href="{% url 'profile' %}">My Profile</a>
       </div>
     </div>
   </header>
-
+  {% if request.user.profile.neighborhood %}
   <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
     <div class="col-md-6 px-0">
       <h1 class="display-4 font-italic">
@@ -198,24 +195,30 @@
     <div class="col-md-6">
       <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-primary">By Who</strong>
-          <h3 class="mb-0">Most Recent Post</h3>
+          <h3 class="mb-0">Daily Quote</h3>
           <div class="mb-1 text-muted">Nov 12</div>
-          <p class="card-text mb-auto">This is a wider card with supporting text below as a natural
-            lead-in to additional content.</p>
-          <a href="#" class="stretched-link">Continue reading</a>
+          <p class="card-text mb-auto">
+            You are today where your thoughts have brought you; you will be tomorrow where your thoughts take you.</p>
         </div>
-      </div> 
+      </div>
     </div>
     <div class="col-md-6">
       <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-success">By Who</strong>
-          <h3 class="mb-0">Recently opened business</h3>
-          <div class="mb-1 text-muted">Nov 11</div>
-          <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to
-            additional content.</p>
-          <a href="#" class="stretched-link">Continue reading</a>
+          <h3 class="mb-0">Daily Reminders</h3>
+          <div class="mb-1 text-muted">Nov 12</div>
+          <p class="mb-auto">
+            All residents, take note of the following:
+            <ul>
+              <li>
+                Appreciate the guardsmen.
+              </li>
+              <li>
+                Pay for the utility bills
+              </li>
+            </ul>
+            Have a good day!
+          </p>
         </div>
       </div>
     </div>
@@ -261,16 +264,16 @@
     <aside class="col-md-4">
       <div class="p-4 bg-light rounded" style="width: 100%;">
         <h4 class="font-italic">About my area</h4>
-      {% for hood in hoods %}
-      {% if hood == request.user.profile.neighborhood %}
+        {% for hood in hoods %}
+        {% if hood == request.user.profile.neighborhood %}
         <p>
-          Welcome to <em>{{ hood.name }}</em> homepage. Your area is located in {{ hood.location }} and 
+          Welcome to <em>{{ hood.name }}</em> homepage. Your area is located in {{ hood.location }} and
           has an occupancy of {{ hood.occupants }} people.
         </p>
-      {% else %}
-      
-      {% endif %}
-      {% endfor %}
+        {% else %}
+
+        {% endif %}
+        {% endfor %}
       </div>
 
       <div class="p-4 bg-light rounded" style="width: 100%;">
@@ -280,24 +283,26 @@
         <div class="business d-flex" style="align-items: center;">
           <div class="blogo">
             {% if business.business_logo %}
-              <img src="{{ business.business_logo.url}}" alt="" class="rounded" style="height: 80px; width: 80px; padding: 10px 10px;border-radius: 50px;">
+            <img src="{{ business.business_logo.url}}" alt="" class="rounded"
+              style="height: 80px; width: 80px; padding: 10px 10px;border-radius: 50px;">
             {% else %}
-              <img src="/static/images/linkerd.svg" alt="" class="rounded" style="height: 50px; width: 50px; padding: 10px 10px;">
+            <img src="/static/images/linkerd.svg" alt="" class="rounded"
+              style="height: 50px; width: 50px; padding: 10px 10px;">
             {% endif %}
           </div>
           <div class="bdets">
             <p style="margin: 0;">
               {{ business.name }}
             </p>
-            <p class = 'text-muted' style="margin: 0;">
+            <p class='text-muted' style="margin: 0;">
               {{ business.contact }}
             </p>
           </div>
         </div>
         {% else %}
-          <p>
-            There are no local registered businesses around here.
-          </p>
+        <p>
+          There are no local registered businesses around here.
+        </p>
         {% endif %}
         {% endfor %}
       </div>
@@ -331,7 +336,60 @@
         </div>
       </div>
     </aside>
-
+    {% else %}
+    <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+      <div class="col-md-6 px-0">
+        <h1 class="display-4 font-italic">
+          Friendly Neighborhood Spiderman
+        </h1>
+        <p class="lead my-3">
+          Welcome to your local Neighborhood watch. Here you will find all important notifications
+          that directly affect you as a member of our community. Feel free to notify your neighbors
+          and see their posts.
+        </p>
+        <p class="lead mb-0">
+          <!-- Button trigger modal -->
+          <!-- <a type="button" href="" class="text-white font-weight-bold btn btn-secondary" data-bs-toggle="modal"
+          data-bs-target="#exampleModal">
+          Add a post for everyone
+        </a> -->
+        </p>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-md-6">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+          <div class="col p-4 d-flex flex-column position-static">
+            Welcome <strong class="d-inline-block mb-2 text-primary">{{ request.user.username }}</strong>
+            <h3 class="mb-0"></h3>
+            <div class="mb-1 text-muted">You have joined The Friendly Neighborhood Spiderman app on {{ request.user.profile.created }}</div>
+            <p class="card-text mb-auto">
+              As you may have noticed, you cannot see any information on the website. Would you like to know why?
+              View the next card.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+          <div class="col p-4 d-flex flex-column position-static">
+            <strong class="d-inline-block mb-2 text-success">View Messages</strong>
+            <!-- <h3 class="mb-0">Recently opened business</h3>
+            <div class="mb-1 text-muted">Nov 11</div> -->
+            <p class="mb-auto">
+              To view information relevant to your neighborhood, click the button below to edit your profile and select
+              your neighborhood for you to experience the websites full potential!
+            </p>
+            <p>
+              <a type="button" href="{% url 'updateprofile' request.user.profile.pk %}" class="text-white font-weight-bold btn btn-secondary">
+                Update Profile
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
   </div><!-- /.row -->
 
 </main><!-- /.container -->
